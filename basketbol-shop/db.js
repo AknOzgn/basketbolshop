@@ -1,9 +1,18 @@
 const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const db = new DatabaseSync(path.join(__dirname, 'data', 'shop.db'));
+
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+  console.log("[db] 'data' klasörü oluşturuldu.");
+}
+
+
+const db = new DatabaseSync(path.join(dataDir, 'shop.db'));
 db.exec('PRAGMA journal_mode = WAL;');
 
 db.exec(`
