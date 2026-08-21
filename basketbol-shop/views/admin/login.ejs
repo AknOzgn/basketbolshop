@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title>Yönetici Girişi</title>
+  <%- include('../partials/head') %>
+</head>
+<body class="admin-body">
+  <div class="admin-login-box">
+    <h1>🏀 Yönetici Girişi</h1>
+    <% if (error) { %><p class="error-msg"><%= error %></p><% } %>
+    <form action="/admin/login" method="post">
+      <label>Kullanıcı Adı
+        <input type="text" name="username" required autofocus>
+      </label>
+      <label>Şifre
+        <input type="password" name="password" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-large">Giriş Yap</button>
+    </form>
+    <a href="/" class="back-link">&larr; Siteye dön</a>
+  </div>
+</body>
+</html>

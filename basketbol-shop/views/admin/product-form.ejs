@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><title><%= product ? 'Ürün Düzenle' : 'Yeni Ürün' %> | Admin</title><%- include('../partials/head') %></head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <%- include('_sidebar') %>
+    <main class="admin-main">
+      <h1><%= product ? 'Ürünü Düzenle' : 'Yeni Ürün Ekle' %></h1>
+
+      <form action="<%= product ? '/admin/urunler/' + product.id + '/duzenle' : '/admin/urunler/yeni' %>" method="post" enctype="multipart/form-data" class="admin-form">
+        <label>Ürün Adı *
+          <input type="text" name="name" required value="<%= product ? product.name : '' %>">
+        </label>
+        <label>Açıklama
+          <textarea name="description" rows="4"><%= product ? product.description : '' %></textarea>
+        </label>
+        <label>Kategori *
+          <input type="text" name="category" required value="<%= product ? product.category : '' %>" placeholder="Örn: Toplar, Ayakkabı, Giyim, Ekipman, Aksesuar">
+        </label>
+        <label>Fiyat (₺) *
+          <input type="number" step="0.01" name="price" required value="<%= product ? product.price : '' %>">
+        </label>
+        <label>Stok Adedi *
+          <input type="number" name="stock" required value="<%= product ? product.stock : 0 %>">
+        </label>
+        <label>Ürün Görseli
+          <input type="file" name="image" accept="image/*">
+        </label>
+        <% if (product && product.image_url) { %>
+          <img src="<%= product.image_url %>" class="admin-thumb-preview">
+        <% } %>
+        <% if (product) { %>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="active" <%= product.active ? 'checked' : '' %>>
+          Sitede görünür (aktif)
+        </label>
+        <% } %>
+
+        <button type="submit" class="btn btn-primary btn-large"><%= product ? 'Kaydet' : 'Ürünü Ekle' %></button>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

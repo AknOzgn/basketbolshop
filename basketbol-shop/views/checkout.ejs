@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title>Ödeme | <%= siteName %></title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="container page checkout-layout">
+    <div class="checkout-form-col">
+      <h1>Teslimat ve Ödeme</h1>
+      <% if (error) { %><p class="error-msg"><%= error %></p><% } %>
+
+      <form action="/odeme" method="post" class="checkout-form">
+        <label>Ad Soyad *
+          <input type="text" name="customer_name" required>
+        </label>
+        <label>E-posta *
+          <input type="email" name="email" required>
+        </label>
+        <label>Telefon
+          <input type="tel" name="phone">
+        </label>
+        <label>Adres *
+          <textarea name="address" rows="3" required></textarea>
+        </label>
+        <label>Şehir *
+          <input type="text" name="city" required>
+        </label>
+
+        <fieldset class="payment-methods">
+          <legend>Ödeme Yöntemi</legend>
+          <label class="radio-option">
+            <input type="radio" name="payment_method" value="havale" checked>
+            Havale / EFT
+          </label>
+          <% if (iyzicoActive) { %>
+            <label class="radio-option">
+              <input type="radio" name="payment_method" value="kredi_karti">
+              Kredi/Banka Kartı (iyzico güvenli ödeme)
+            </label>
+          <% } else { %>
+            <p class="payment-disabled">Kredi kartı ile ödeme şu anda aktif değil (site sahibi henüz iyzico bilgilerini tanımlamadı). Lütfen Havale/EFT seçeneğini kullanın.</p>
+          <% } %>
+        </fieldset>
+
+        <div class="bank-info-box">
+          <strong>Havale/EFT bilgileri:</strong>
+          <p>IBAN: <%= bankInfo.iban %></p>
+          <p>Hesap Sahibi: <%= bankInfo.holder %></p>
+          <p>Banka: <%= bankInfo.bankName %></p>
+          <small>Siparişinizi verdikten sonra bu bilgilerle ödeme yapıp açıklama kısmına sipariş numaranızı yazmanız yeterlidir.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-large">Siparişi Tamamla</button>
+      </form>
+    </div>
+
+    <div class="checkout-summary-col">
+      <h2>Sipariş Özeti</h2>
+      <ul class="summary-list">
+        <% items.forEach(i => { %>
+          <li><%= i.product.name %> x <%= i.quantity %> <span><%= i.subtotal.toFixed(2) %> ₺</span></li>
+        <% }) %>
+      </ul>
+      <p class="cart-total">Toplam: <strong><%= total.toFixed(2) %> ₺</strong></p>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

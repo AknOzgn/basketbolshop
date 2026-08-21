@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title><%= siteName %> | Basketbol Malzemeleri</title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Sahaya Çık, Farkını Göster 🏀</h1>
+      <p>Toplar, ayakkabılar, formalar ve daha fazlası — tek adreste.</p>
+    </div>
+  </section>
+
+  <div class="container main-layout">
+    <aside class="filters">
+      <h3>Kategoriler</h3>
+      <ul>
+        <li><a href="/" class="<%= !activeCategory ? 'active' : '' %>">Tümü</a></li>
+        <% categories.forEach(cat => { %>
+          <li><a href="/?kategori=<%= encodeURIComponent(cat) %>" class="<%= activeCategory === cat ? 'active' : '' %>"><%= cat %></a></li>
+        <% }) %>
+      </ul>
+    </aside>
+
+    <main class="product-grid">
+      <% if (products.length === 0) { %>
+        <p>Aramanızla eşleşen ürün bulunamadı.</p>
+      <% } %>
+      <% products.forEach(p => { %>
+        <a class="product-card" href="/urun/<%= p.slug %>">
+          <div class="product-img"><img src="<%= p.image_url %>" alt="<%= p.name %>"></div>
+          <div class="product-info">
+            <h3><%= p.name %></h3>
+            <span class="category-tag"><%= p.category %></span>
+            <p class="price"><%= p.price.toFixed(2) %> ₺</p>
+            <% if (p.stock === 0) { %><p class="stock-warning">Stokta yok</p><% } %>
+          </div>
+        </a>
+      <% }) %>
+    </main>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

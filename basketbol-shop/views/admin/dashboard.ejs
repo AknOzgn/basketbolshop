@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><title>Admin Panel</title><%- include('../partials/head') %></head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <%- include('_sidebar') %>
+    <main class="admin-main">
+      <h1>Genel Bakış</h1>
+      <div class="stat-cards">
+        <div class="stat-card"><span><%= productCount %></span>Ürün</div>
+        <div class="stat-card"><span><%= orderCount %></span>Sipariş</div>
+        <div class="stat-card"><span><%= pendingCount %></span>Bekleyen Sipariş</div>
+        <div class="stat-card"><span><%= revenue.toFixed(2) %> ₺</span>Toplam Ciro</div>
+      </div>
+
+      <h2>Son Siparişler</h2>
+      <table class="admin-table">
+        <thead><tr><th>Sipariş No</th><th>Müşteri</th><th>Tutar</th><th>Durum</th><th>Tarih</th><th></th></tr></thead>
+        <tbody>
+          <% recentOrders.forEach(o => { %>
+          <tr>
+            <td><%= o.order_no %></td>
+            <td><%= o.customer_name %></td>
+            <td><%= o.total.toFixed(2) %> ₺</td>
+            <td><span class="badge"><%= o.status %></span></td>
+            <td><%= new Date(o.created_at).toLocaleDateString('tr-TR') %></td>
+            <td><a href="/admin/siparisler/<%= o.id %>">Detay</a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

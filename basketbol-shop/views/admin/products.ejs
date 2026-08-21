@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><title>Ürünler | Admin</title><%- include('../partials/head') %></head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <%- include('_sidebar') %>
+    <main class="admin-main">
+      <div class="admin-header-row">
+        <h1>Ürünler</h1>
+        <a href="/admin/urunler/yeni" class="btn btn-primary">+ Yeni Ürün</a>
+      </div>
+
+      <table class="admin-table">
+        <thead><tr><th>Görsel</th><th>Ad</th><th>Kategori</th><th>Fiyat</th><th>Stok</th><th>Aktif</th><th></th></tr></thead>
+        <tbody>
+          <% products.forEach(p => { %>
+          <tr>
+            <td><img src="<%= p.image_url %>" class="admin-thumb"></td>
+            <td><%= p.name %></td>
+            <td><%= p.category %></td>
+            <td><%= p.price.toFixed(2) %> ₺</td>
+            <td><%= p.stock %></td>
+            <td><%= p.active ? 'Evet' : 'Hayır' %></td>
+            <td class="admin-actions">
+              <a href="/admin/urunler/<%= p.id %>/duzenle">Düzenle</a>
+              <form action="/admin/urunler/<%= p.id %>/sil" method="post" onsubmit="return confirm('Bu ürünü silmek istediğinize emin misiniz?');">
+                <button type="submit" class="btn-remove">Sil</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

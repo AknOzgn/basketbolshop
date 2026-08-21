@@ -1,0 +1,10 @@
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">🏀 <%= siteName %></a>
+    <form class="search-form" action="/" method="get">
+      <input type="text" name="q" placeholder="Ürün ara..." value="<%= typeof q !== 'undefined' ? q : '' %>">
+      <button type="submit">Ara</button>
+    </form>
+    <a href="/sepet" class="cart-link">🛒 Sepet <span class="cart-count"><%= cartCount %></span></a>
+  </div>
+</header>

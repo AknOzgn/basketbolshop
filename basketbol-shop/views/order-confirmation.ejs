@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title>Sipariş Alındı | <%= siteName %></title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="container page order-confirmation">
+    <h1>✅ Siparişiniz Alındı!</h1>
+    <p>Sipariş numaranız: <strong><%= order.order_no %></strong></p>
+    <p>Durum: <strong><%= order.status %></strong></p>
+
+    <% if (order.payment_method === 'havale') { %>
+      <div class="bank-info-box">
+        <strong>Ödeme için Havale/EFT bilgileri:</strong>
+        <p>IBAN: <%= bankInfo.iban %></p>
+        <p>Hesap Sahibi: <%= bankInfo.holder %></p>
+        <p>Banka: <%= bankInfo.bankName %></p>
+        <small>Açıklama kısmına <strong><%= order.order_no %></strong> sipariş numaranızı yazmayı unutmayın.</small>
+      </div>
+    <% } %>
+
+    <h2>Sipariş Detayı</h2>
+    <ul class="summary-list">
+      <% items.forEach(i => { %>
+        <li><%= i.product_name %> x <%= i.quantity %> <span><%= (i.price * i.quantity).toFixed(2) %> ₺</span></li>
+      <% }) %>
+    </ul>
+    <p class="cart-total">Toplam: <strong><%= order.total.toFixed(2) %> ₺</strong></p>
+
+    <a href="/" class="btn btn-primary">Alışverişe Devam Et</a>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

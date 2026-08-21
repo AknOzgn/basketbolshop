@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title>Sepetim | <%= siteName %></title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="container page">
+    <h1>Sepetim</h1>
+
+    <% if (items.length === 0) { %>
+      <p>Sepetiniz boş. <a href="/">Alışverişe başlayın &rarr;</a></p>
+    <% } else { %>
+      <table class="cart-table">
+        <thead>
+          <tr><th>Ürün</th><th>Fiyat</th><th>Adet</th><th>Ara Toplam</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% items.forEach(i => { %>
+            <tr>
+              <td class="cart-product-cell">
+                <img src="<%= i.product.image_url %>" alt="">
+                <span><%= i.product.name %></span>
+              </td>
+              <td><%= i.product.price.toFixed(2) %> ₺</td>
+              <td>
+                <form action="/sepet/guncelle" method="post" class="qty-form">
+                  <input type="hidden" name="productId" value="<%= i.product.id %>">
+                  <input type="number" name="quantity" value="<%= i.quantity %>" min="0" max="<%= i.product.stock %>">
+                  <button type="submit">Güncelle</button>
+                </form>
+              </td>
+              <td><%= i.subtotal.toFixed(2) %> ₺</td>
+              <td>
+                <form action="/sepet/sil" method="post">
+                  <input type="hidden" name="productId" value="<%= i.product.id %>">
+                  <button type="submit" class="btn-remove">Sil</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <div class="cart-summary">
+        <p class="cart-total">Toplam: <strong><%= total.toFixed(2) %> ₺</strong></p>
+        <a href="/odeme" class="btn btn-primary">Ödemeye Geç</a>
+      </div>
+    <% } %>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

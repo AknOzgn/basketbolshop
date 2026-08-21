@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <title><%= product.name %> | <%= siteName %></title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="container product-detail">
+    <div class="product-detail-img">
+      <img src="<%= product.image_url %>" alt="<%= product.name %>">
+    </div>
+    <div class="product-detail-info">
+      <span class="category-tag"><%= product.category %></span>
+      <h1><%= product.name %></h1>
+      <p class="price-large"><%= product.price.toFixed(2) %> ₺</p>
+      <p class="description"><%= product.description %></p>
+      <p class="stock-info">
+        <% if (product.stock > 0) { %>
+          Stokta <strong><%= product.stock %></strong> adet var
+        <% } else { %>
+          <span class="stock-warning">Stokta yok</span>
+        <% } %>
+      </p>
+
+      <% if (product.stock > 0) { %>
+      <form action="/sepet/ekle" method="post" class="add-to-cart-form">
+        <input type="hidden" name="productId" value="<%= product.id %>">
+        <label>Adet:
+          <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>">
+        </label>
+        <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+      </form>
+      <% } %>
+
+      <a href="/" class="back-link">&larr; Ürünlere geri dön</a>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

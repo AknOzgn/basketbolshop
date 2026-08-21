@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><title>Siparişler | Admin</title><%- include('../partials/head') %></head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <%- include('_sidebar') %>
+    <main class="admin-main">
+      <h1>Siparişler</h1>
+      <table class="admin-table">
+        <thead><tr><th>Sipariş No</th><th>Müşteri</th><th>Şehir</th><th>Tutar</th><th>Ödeme</th><th>Durum</th><th>Tarih</th><th></th></tr></thead>
+        <tbody>
+          <% orders.forEach(o => { %>
+          <tr>
+            <td><%= o.order_no %></td>
+            <td><%= o.customer_name %></td>
+            <td><%= o.city %></td>
+            <td><%= o.total.toFixed(2) %> ₺</td>
+            <td><%= o.payment_method === 'havale' ? 'Havale/EFT' : 'Kredi Kartı' %></td>
+            <td><span class="badge"><%= o.status %></span></td>
+            <td><%= new Date(o.created_at).toLocaleDateString('tr-TR') %></td>
+            <td><a href="/admin/siparisler/<%= o.id %>">Detay</a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>
