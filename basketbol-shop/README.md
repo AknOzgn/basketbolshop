@@ -1,4 +1,4 @@
-# 🏀 TopSaha Basketbol — E-Ticaret Sitesi
+# 🏀 Basketbol — E-Ticaret Sitesi
 
 Basketbol malzemeleri satan, admin panelli, ödeme sistemi entegre tam çalışan bir e-ticaret sitesi.
 
